@@ -1,0 +1,43 @@
+<%- include('layout/_header') %>
+
+      <% if(message){ %>
+      <div class="alert <%= message.type %>"><%= message.message %></div>
+      <% } %>
+      <div class="container-table">
+        <% if (users.length > 0) { %>
+        <table>
+          <thead>
+            <tr>
+              <th>Number</th>
+              <th>Name</th>
+              <th>E-mail</th>
+              <th>Phone</th>
+              <th>Registration No.</th>
+              <th>Payment</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% users.forEach((row, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= row.name %></td>
+              <td><%= row.email %></td>
+              <td><%= row.phone %></td>
+              <td><%= row.admission %></td>
+              <td><%= row.payment %></td>
+              <td>
+                <a href="/edit/<%= row._id %>">Edit</a>
+                <a href="/delete/<%= row._id %>">Delete</a>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } else { %>
+        <h1 class="err">No Registered Member found in the database</h1>
+        <% } %>
+      </div>
+    </div>
+
+<%- include('layout/_footer') %>

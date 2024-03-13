@@ -1,0 +1,36 @@
+<%- include('layout/_header') %>
+
+
+        <div class="container-el">
+            <form action="/add" method="POST" id="add-form" enctype="multipart/form-data">
+                <span>
+                    <h1>Register New Users</h1>
+                </span>
+                <div class="input-el">
+                    <label for="name">Name:</label><br/>
+                    <input type="text" id="name" name="name" placeholder="Enter name here" autocomplete="on" required>
+                </div>
+                <div class="input-el">
+                    <label for="email">Email:</label><br/>
+                    <input type="email" id="email" name="email" placeholder="Enter email here" autocomplete="on" required>
+                </div>
+                <div class="input-el">
+                    <label for="phone">Phone:</label><br/>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter phone here" autocomplete="on" required>
+                </div>
+                <div class="input-el">
+                    <label for="admission">Admission Number:</label><br/>
+                    <input type="text" id="admission" name="admission" placeholder="Enter the admission number here" autocomplete="on" required>
+                </div>
+                <div class="input-el">
+                    <label for="payment">Amount Paid:</label><br/>
+                    <input type="text" id="payment" name="payment" placeholder="Enter the amount paid here"  autocomplete="on" required>
+                </div>
+                <div class="input-el">
+                    <input type="submit" name="submit" value="Add User" class="input-el-btn">
+                </div>
+            </form>
+        </div>
+   </div>
+
+   <%- include('layout/_footer') %>
