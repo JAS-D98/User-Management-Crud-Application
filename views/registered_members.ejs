@@ -5,8 +5,14 @@
       <% } %>
       <div class="container-table">
         <% if (users.length > 0) { %>
+          <form action="/delete/all" method="post">
+            <button type="submit">Delete All</button>
+        </form>
         <table>
           <thead>
+            <tr>
+              <td><a href="./users.csv" download="">Download</a></td>
+            </tr>
             <tr>
               <th>Number</th>
               <th>Name</th>
@@ -15,6 +21,7 @@
               <th>Registration No.</th>
               <th>Payment</th>
               <th>Actions</th>
+              <!-- <a href="./users.csv" download="">Download File</a> -->
             </tr>
           </thead>
           <tbody>

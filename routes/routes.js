@@ -1,23 +1,33 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/users');
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const authController=require('../controllers/authControllers');
 
-router.get('/login', (req, res)=>{
-    res.render('login', {title:'Login Page'});
-})
 
-router.post('/login', (req, res)=>{
-    res.render('login', {title:'Login Page'});
-})
+// Define CSV writer
+const csvWriter = createCsvWriter({
+  path: './public/users.csv',
+  header: [
+    { id: 'name', title: 'Name' },
+    { id: 'email', title: 'Email' },
+    { id: 'phone', title: 'Phone' },
+    { id: 'admission', title: 'Registration Number' },
+    { id: 'payment', title: 'Payment (Kshs)' },
+    // Add more fields as needed
+  ]
+});
 
-router.get('/signUp', (req, res)=>{
-    res.render('signup', {title:'Sign Up Page'});
-})
+// login and signup routes
+router.get('/login', authController.login_get)
 
-router.post('/signUp', (req, res)=>{
-    
-})
+router.post('/login',authController.login_post)
 
+router.get('/signUp', authController.signup_get)
+
+router.post('/signUp', authController.signup_post)
+
+//Routes for pages
 router.get('/', (req, res) => {
     res.render('home', { title: 'Home Page' });
 });
@@ -60,6 +70,25 @@ router.get('/registered', async (req, res) => {
     }
 }); */
 
+// Get user route
+router.get("/edit/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const user = await User.findById(id);
+
+        if (!user) {
+            return res.redirect('/registered');
+        }
+
+        res.render("edit_users", {
+            title: "Edit User",
+            user: user,
+        });
+    } catch (err) {
+        res.json({ message: err.message });
+    }
+});
+
 // Insert a user into the database
 router.post('/add', async (req, res) => {
     try {
@@ -70,6 +99,16 @@ router.post('/add', async (req, res) => {
             admission: req.body.admission,
             payment: req.body.payment,         
         });
+        const { name, email, phone, admission, payment } = req.body;
+
+        // Write form data to CSV file
+        csvWriter.writeRecords([{ name, email, phone, admission, payment }])
+          .then(() => {
+            console.log('Form data written to CSV file');
+          })
+          .catch(err => {
+            console.error('Error writing to CSV file:', err);
+          });
         await user.save();
         req.session.message = {
             type: 'success',
@@ -105,15 +144,31 @@ router.post('/add', async (req, res) => {
 //     }
 // });
 
+//update a users info
+router.post('/update/:id', async(req, res)=>{
+    User.findByIdAndUpdate(req.params.id, req.body)
+        .then((result)=>{
+            console.log('Member details successfully edited')
+            res.redirect('/registered')
+        })
+        .catch(err=>console.log(err))
+});
+
 // Route to delete a user
-router.delete('/delete/:id', async (req, res) => {
-    try {
-      await User.findByIdAndDelete(req.params.id);
-      res.status(200).send('User deleted successfully');
-    } catch (err) {
-      console.error('Error deleting user:', err);
-      res.status(500).send('Error deleting user');
-    }
+router.get('/delete/:id', async (req, res) => {
+    User.findByIdAndDelete(req.params.id)
+    .then((result)=>{res.redirect('/registered')})
+    .catch(err=>console.log(err))
   });
+
+  // Route to delete all users
+router.post('/delete/all', async (req, res) => {
+    await User.deleteMany({});
+    res.redirect('/registered');
+});
+
+router.use((req, res)=>{
+    res.render('404',{ title: '404'})
+})
 
 module.exports = router;

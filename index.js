@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 // Render ejs templates
 app.set('view engine', 'ejs');
 // Render static pages
-app.use('/css', express.static('css'));
+app.use(express.static('public'));
 // Routing different routes
 app.use("", require('./routes/routes'));
 

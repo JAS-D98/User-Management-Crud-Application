@@ -1,20 +1,28 @@
 <%- include('layout/_header') %>
         <div class="container-el">
-            <form action="/update/<%= user._id %>" method="post" id="add-form" enctype="multipart/form-data">
+            <form action="/update/<%= user._id %>" method="post">
                 <span>
-                    <h1>Edit User (<%= user.name %>)</h1>
+                    <h1>Update Member Details</h1>
                 </span>
                 <div class="input-el">
                     <label for="name">Name:</label><br/>
-                    <input type="text" id="name" name="name" value="<%= user.name %>" placeholder="Enter name Here" autocomplete="on" required>
+                    <input type="text" id="name" name="name" placeholder="Enter name here" autocomplete="on" required>
                 </div>
                 <div class="input-el">
                     <label for="email">Email:</label><br/>
-                    <input type="email" id="email" name="email" value="<%= user.email %>"  placeholder="Enter email Here" autocomplete="on" required>
+                    <input type="email" id="email" name="email" placeholder="Enter email here" autocomplete="on" required>
                 </div>
                 <div class="input-el">
                     <label for="phone">Phone:</label><br/>
-                    <input type="tel" id="phone" name="phone" value="<%= user.phone %>"  placeholder="Enter phone Here" autocomplete="on" required>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter phone here" autocomplete="on" required>
+                </div>
+                <div class="input-el">
+                    <label for="admission">Admission Number:</label><br/>
+                    <input type="text" id="admission" name="admission" placeholder="Enter the admission number here" autocomplete="on" required>
+                </div>
+                <div class="input-el">
+                    <label for="payment">Amount Paid:</label><br/>
+                    <input type="text" id="payment" name="payment" placeholder="Enter the amount paid here"  autocomplete="on" required>
                 </div>
                 <div class="input-el">
                     <input type="submit" name="submit" value="Update User" class="input-el-btn">
