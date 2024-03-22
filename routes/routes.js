@@ -3,8 +3,35 @@ const router = express.Router();
 const User = require('../models/users');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const authController=require('../controllers/authControllers');
+const Notification=require('../models/notifications');
+const cookieParser=require('cookie-parser');
+const { requireAuth, checkUser } = require('../authmiddleware/authMiddleware');
+// const fs=require('fs');
+// const { Parser } = require('json2csv');
 
+router.use(cookieParser());
 
+// User.find({}, (err, users)=>{
+//     if(err){
+//         console.log('Error retrieving data to database', err);
+//         return;
+//     }
+
+//     //converting data to csv format
+//     const fields = ['name', 'email', 'admission', 'phone', 'payment']; // fields to include in CSV
+//     const json2csvParser = new Parser({ fields });
+//     const csvData = json2csvParser.parse(users);
+
+//     // Write CSV data to file
+//     fs.writeFile('./public/users.csv', csvData, (err) => {
+//         if (err) {
+//         console.error('Error writing to CSV file:', err);
+//         return;
+//         }
+//         console.log('CSV file created successfully');
+//     });
+
+// })
 // Define CSV writer
 const csvWriter = createCsvWriter({
   path: './public/users.csv',
@@ -18,6 +45,8 @@ const csvWriter = createCsvWriter({
   ]
 });
 
+router.get('*', checkUser)
+
 // login and signup routes
 router.get('/login', authController.login_get)
 
@@ -27,21 +56,78 @@ router.get('/signUp', authController.signup_get)
 
 router.post('/signUp', authController.signup_post)
 
+router.post('/logout', authController.logout_get)
+
+router.get('/mutcu-admin', (req, res)=>{
+    res.render('admin', {title: 'MUTCU Admin Page'})
+})
+
 //Routes for pages
 router.get('/', (req, res) => {
     res.render('home', { title: 'Home Page' });
 });
 
-router.get('/notification', (req, res) => {
-    res.render('notifications', { title: 'Notifications Page' });
+router.get('/notifications', async (req, res) => {
+
+    Notification.find().sort({createdAt: -1})
+    .then((result)=>{
+        res.render('notifications', {title : 'Notifications Page', notices: result})
+    })
+    .catch(err=>console.log(err))
 });
+
+//delete all notifications
+router.get('/del-notice', (req, res)=>{
+    Notification.deleteMany({})
+        .then((result)=>{
+            console.log('Successfully deleted all notifications')
+            res.redirect('/notifications')
+        })
+        .catch(err=>console.log(err))
+   
+})
+
+// Insert a user into the database
+router.post('/notifications', async (req, res) => {
+    const notification=new Notification(req.body)
+    notification.save()
+        .then((result)=>{
+            console.log('Successfully stored in the database');
+            res.redirect('/notifications')
+        })
+        .catch(err=>console.log(err))
+});
+
+// router.post('/notifications', (req, res) => {
+//     const notification= new Notification(req.body);
+
+//     notification.save()
+//         .then((result)=>{
+//             console.log('Notification sent successfuly')
+//         })
+//         .catch(err=>console.log(err))
+        
+//     // try{
+//     //     const notice=await notice.create(update)
+//     //     res.status(200).json(notice)
+//     //     }
+//     //     catch(err){
+//     //        console.log(err) 
+//     //        res.status(400).send('Error Notification not sent')
+//     //     }
+//     // Notice.create({title, time, notice})
+//     //     .then((result)=>{
+//     //         console.log('notification sent')
+//     //     })
+//     //     .catch(err=>console.log(err));
+// });
 
 router.get('/add', (req, res) => {
     res.render('add_users', { title: 'Add Users Page' });
 });
 
 // Route to fetch all users
-router.get('/registered', async (req, res) => {
+router.get('/registered',requireAuth, async (req, res) => {
     try {
       const users = await User.find().exec();
       res.render('registered_members', {
@@ -100,7 +186,8 @@ router.post('/add', async (req, res) => {
             payment: req.body.payment,         
         });
         const { name, email, phone, admission, payment } = req.body;
-
+        // Read csv file
+        
         // Write form data to CSV file
         csvWriter.writeRecords([{ name, email, phone, admission, payment }])
           .then(() => {

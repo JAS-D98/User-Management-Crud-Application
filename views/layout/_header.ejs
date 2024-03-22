@@ -11,11 +11,18 @@
         <nav>
             <h1>MUTCU Mission Center</h1>
             <ul>
+                <% if(user){ %>
+                    <li>Welcome <%= user.email%></li>
+                    <li>
+                        <a href="/logout">Log Out</a>
+                    </li>
+               <% } %>
+                
                 <li>
                     <a href="/">Home</a>
                 </li>
                 <li>
-                    <a href="/notification">Notifications</a>
+                    <a href="/notifications">Notifications</a>
                 </li>
                 <li>
                     <a href="/add">Add Members</a>
@@ -23,5 +30,6 @@
                 <li>
                     <a href="/registered">Registered Members</a>
                 </li>
+               
             </ul>
         </nav>

@@ -1,11 +1,14 @@
 <%- include('layout/_header') %>
 
-      <% if(message){ %>
-      <div class="alert <%= message.type %>"><%= message.message %></div>
-      <% } %>
+      <% if(message){%>
+        <div class="alert <%= message.type %>">
+            <%= message.message %>
+        </div>
+      <%}%>
+
       <div class="container-table">
         <% if (users.length > 0) { %>
-          <form action="/delete/all" method="post">
+          <form action="/delete/all" method="post" class="delete-all">
             <button type="submit">Delete All</button>
         </form>
         <table>
@@ -34,8 +37,8 @@
               <td><%= row.admission %></td>
               <td><%= row.payment %></td>
               <td>
-                <a href="/edit/<%= row._id %>">Edit</a>
-                <a href="/delete/<%= row._id %>">Delete</a>
+                <a href="/edit/<%= row._id %>" class="btn">Edit</a>
+                <a href="/delete/<%= row._id %>" class="btn">Delete</a>
               </td>
             </tr>
             <% }) %>

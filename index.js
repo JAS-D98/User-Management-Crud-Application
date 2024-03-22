@@ -2,9 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const cookieParser=require('cookie-parser');
 const app = express();
 const PORT = process.env.PORT || 4000;
+const SECRET_KEY=process.env.SECRET_KEY || "It's always a Secret";
 
+app.use(express.json());
+app.use(cookieParser());
 // Database connection
 mongoose.connect(process.env.DB_URI)
     .then(() => console.log('Connected to database'))
@@ -36,6 +40,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 // Routing different routes
 app.use("", require('./routes/routes'));
+
 
 app.listen(PORT, () => {
     console.log(`Server started at http://localhost:${PORT}`);

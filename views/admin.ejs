@@ -1,0 +1,36 @@
+<%- include('layout/_header') %>
+<div class="manage-box">
+    <h1>Welcome Admin</h1>
+    <form action="/del-notice">
+        <button class="del" type="submit">Delete All Notifications</button>
+    </form>
+    <div class="manage-all">
+        <div class="manage-mail">
+            <h2>Send All Members Emails</h2>
+            <form action="/send-email" method="post">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br>
+                <label for="message">Message:</label><br>
+                <textarea id="message" name="message" rows="4" cols="50" required></textarea><br>
+                <button type="submit">Send Email</button>
+              </form>              
+        </div>
+        <div class="manage-mail">
+            <h2>Send Mission Notifications</h2>
+            <form action="/notifications" method="post">
+                <label for="title">Notification Title:</label>
+                <input type="text" id="noticeTitle" name="title" required><br>
+                <label for="date">Date for Submission:</label>
+                <input type="date" id="date" name="date" required><br>
+                <label for="message">Notification Message:</label><br>
+                <textarea id="message" name="message" rows="4" cols="50" required></textarea><br>
+                <button type="submit">Send Notification</button>
+              </form>              
+        </div>
+    
+    </div>
+</div>
+</div>
+<%- include('layout/_footer') %>

@@ -1,9 +1,22 @@
 <%- include('layout/_header') %>
 
-
-        <div class="hero">
-            <h1 class="hero-h1">Welcome To <span>Notifications</span> Page</h1>   
-            <p>There are currently no notifications at the moment</p>        
+        <% if(message){%>
+            <div class="alert <%= message.type %>">
+                <%= message.message %>
+            </div>
+        <%}%>
+        <div class="notifications">
+            <h1 class="hero-h1">Get the latest <span>Mission Updates</span> Here</h1>   
+            <%  if(notices.length > 0) { %>
+                <% notices.forEach((notice, index)=>{ %>
+                    <div class="notice-card">
+                        <h1><span><%=index+1%>.</span> <%= notice.title%>  <span class="date">Date Posted:(<%=notice.date%>)</span> </h1>
+                        <p><%=notice.message%></p>
+                    </div>
+               <% }) %>
+            <% }else{ %>
+            <p>There are currently no notifications available at the moment</p> 
+           <% } %>    
         </div>
     </div>
 

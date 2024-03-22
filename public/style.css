@@ -1,12 +1,12 @@
 *{margin:0; padding: 0;font-family: sans-serif;box-sizing: border-box;}
-.container{width:100%;min-height: 100vh; background: beige;display: flex;flex-direction: column;}
+.container{width:100%;min-height: 100vh; background:whitesmoke;display: flex;flex-direction: column;}
 nav{width: 100%;height: 10vh;background: rgba(135, 206, 235,0.6);display: flex;justify-content: space-between;align-items: center;padding: 20px;}
 nav h1{color: whitesmoke;font-size: 25px;}
 nav ul{display: inline-block;display: flex;justify-content: space-between;align-items: center;}
 nav ul li{list-style: none;margin: 20px;}
 nav ul li a{text-decoration: none;color:gray;}
 .container-el{width: 100%;margin-top: 5%; display: flex;justify-content: center;align-items: center;}
-form{width: 50%; display: flex;align-items: center;flex-direction: column;box-shadow: 2px 2px 2px 2px gray;padding-bottom: 10px;border-radius: 10px;}
+.container-el form,.delete-all{width: 50%; display: flex;align-items: center;flex-direction: column;box-shadow: 2px 2px 2px 2px gray;padding-bottom: 10px;border-radius: 10px;}
 form span{width: 100%;height: 7vh;display: flex;align-items: center;justify-content: center;background: rgba(135, 206, 235,0.6);border-top-left-radius: 10px;border-top-right-radius: 10px;}
 form span h1{color: gray;}
 form .input-el{width: 100%;height: auto;margin-top: 0px;padding: 10px;}
@@ -60,3 +60,29 @@ form .input-el input::placeholder{font-size: 16px;}
 .hero button:hover{background: transparent;}
 
 .err{color: gray;font-size: 60px;padding: 0px 20px;}
+
+.auth-box{min-height: 90vh;display: flex;justify-content: center;align-items: center;flex-direction: column;}
+.auth-box h1{color: gray;}
+.auth-box form{color: #fff;padding: 20px;width: 50%;display: flex;justify-content: center;align-items: center;flex-direction: column;}
+.auth-box form button, .manage-mail form button, .del{width: 200px;padding: 10px 20px;border-radius: 25px;border:2px solid #87cfebcb;background:#87cfebcb;margin-top: 2%;font-weight: bold;font-size: 18px;color: gray;box-shadow: 0px 1px 1px 0px #000;cursor: pointer;}
+.auth-box form button:hover,.manage-mail form button:hover, .del:hover{background: transparent;}
+
+.notifications, .manage-box{min-height: 90vh;display: flex;align-items: center;flex-direction: column;}
+.notifications h1, .manage-box h1{color: gray;font-size: 70px;margin-top: 1%;} 
+.notifications span{color: #87cfebcb;}
+.notifications p{font-size: 25px;font-weight: bold;color: gray;}
+.notice-card{width: 100%;padding: 10px 20px;}
+.notice-card h1{font-size: 40px;}
+.notice-card p{margin-left: 3%;margin-top: 1%;font-size: 25px;color: gray;}
+.date{font-size: 25px;}
+
+.manage-box{min-height: 90vh;display: flex;justify-content: center;align-items: center;}
+.manage-all{width: 100%;padding: 10px 20px;display: flex;justify-content: space-evenly;}
+.manage-mail{width: 40%;background: #fff;padding: 10px;border-radius: 25px;box-shadow: 0px 1px 1px 0px #000;}
+.manage-mail h2{font-size: 32px;margin-bottom: 2%;}
+.manage-mail label{font-size: 25px;font-weight: semi-bold;color: gray;}
+.manage-mail form input, textarea{width: 100%;padding:5px 10px;border-top:0px; border-left: 0px;border-right: 0px;outline: none;margin:1% 0%;font-size: 18px;}
+form .del{background: red;color: #fff;border:2px solid red;margin-left: 6%;width: 400px;}
+form .del:hover{color: red;}
+
+.error{color: red;}
