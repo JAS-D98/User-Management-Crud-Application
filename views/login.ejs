@@ -23,17 +23,22 @@
             </ul>
         </nav>
 <div class="auth-box">
-<h1>Welcome Back Jasper</h1> <!--//+ Jas -->
-<h1>Login Here</h1>
+<img src="/banner.jpg" width="250px"/>
+<% if(user){ %>
+    <h1>Welcome Back <%= user.username%></h1>
+<% }else{ %>
+    <h1>Welcome Back</h1>
+<%} %>
+<h2>Login Here</h2>
 <form>
     <div class="input-el">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" required placeholder="Enter your email address here">
         <div class="email error"></div>
     </div>
     <div class="input-el">
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" autocomplete="off" required>
+        <input type="password" id="password" name="password" autocomplete="off" required placeholder="Enter your email address here">
         <div class="password error"></div>
     </div>
     <button type="submit">Login</button>

@@ -34,6 +34,15 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use((req, res, next) => {
+    if (req.session.message) {
+        setTimeout(() => {
+            delete req.session.message;
+        }, 3000); // Timeout duration in milliseconds (e.g., 3000ms = 3 seconds)
+    }
+    next();
+});
+
 // Render ejs templates
 app.set('view engine', 'ejs');
 // Render static pages

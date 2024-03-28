@@ -1,0 +1,29 @@
+<%- include('layout/_header') %>
+      <div class="container-table">
+        <% if (users.length > 0) { %>
+        <table>
+          <thead>
+            <tr>
+              <th>Number</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Registration No.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% users.forEach((row, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= row.name %></td>
+              <td><%= row.phone %></td>
+              <td><%= row.admission %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } else { %>
+        <h1 class="err">No Registered Member found in the database</h1>
+        <% } %>
+      </div>
+    </div>
+<%- include('layout/_footer') %>

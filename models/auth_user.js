@@ -5,7 +5,8 @@ const bycrypt=require('bcrypt');
 const authSchema=new mongoose.Schema({
     username:{type: String, required:[true, 'Please enter your username']},
     email:{ type: String, required: [true, 'Please enter your email'], unique:true, lowercase:true, validate:[isEmail, 'Please enter a valid email']},
-    password:{ type: String, required: [true, 'Please enter your password'], minlength: [6, 'minimum password length is 6 characters']}
+    password:{ type: String, required: [true, 'Please enter your password'], minlength: [6, 'minimum password length is 6 characters']},
+    role: { type: String, enum: ['user', 'admin'], default: 'user' },
 })
 authSchema.post('save',(doc, next)=>{
     console.log('new user created and saved', doc)

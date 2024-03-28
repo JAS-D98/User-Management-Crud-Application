@@ -1,7 +1,7 @@
 <%- include('layout/_header') %>
 
         <% if(message){%>
-            <div class="alert <%= message.type %>">
+            <div class="alert <%= message.type %>" id="message">
                 <%= message.message %>
             </div>
         <%}%>
@@ -19,5 +19,13 @@
            <% } %>    
         </div>
     </div>
-
+    <script>
+        // Function to hide the message after a timeout period
+        setTimeout(() => {
+            const messageElement = document.getElementById('message');
+            if (messageElement) {
+                messageElement.style.display = 'none';
+            }
+        }, 2000); // Hide message after 5 seconds (adjust timeout period as needed)
+    </script>
     <%- include('layout/_footer') %>

@@ -1,19 +1,24 @@
 <%- include('layout/_header') %>
 <div class="manage-box">
     <h1>Welcome Admin</h1>
-    <form action="/del-notice">
-        <button class="del" type="submit">Delete All Notifications</button>
-    </form>
+    <div class="info">
+        <form action="/charges" method="post" class="charges">
+           <p><label for="charges">Enter Mission charges here: </label></p>
+            <input type="number" placeholder="e.g Kshs 200" name="charge" required min="0">
+            <button type="submit">Set Charges</button>
+        </form>
+        <form action="/del-notice" class="del-not">
+            <button class="del" type="submit">Delete All Notifications</button>
+        </form>
+    </div>
     <div class="manage-all">
         <div class="manage-mail">
             <h2>Send All Members Emails</h2>
             <form action="/send-email" method="post">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required><br>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required><br>
-                <label for="message">Message:</label><br>
-                <textarea id="message" name="message" rows="4" cols="50" required></textarea><br>
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" class="mail-text" required><br>
+                <label for="text">Message:</label><br>
+                <textarea id="text" name="text" rows="4" cols="50"class="mail-text" required></textarea><br>
                 <button type="submit">Send Email</button>
               </form>              
         </div>

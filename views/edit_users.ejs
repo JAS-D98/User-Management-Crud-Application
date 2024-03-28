@@ -6,26 +6,26 @@
                 </span>
                 <div class="input-el">
                     <label for="name">Name:</label><br/>
-                    <input type="text" id="name" name="name" placeholder="Enter name here" autocomplete="on" required>
+                    <input type="text" id="name" name="name" placeholder="Enter name here" autocomplete="on" required value="<%= user.name %>">
                 </div>
                 <div class="input-el">
                     <label for="email">Email:</label><br/>
-                    <input type="email" id="email" name="email" placeholder="Enter email here" autocomplete="on" required>
+                    <input type="email" id="email" name="email" placeholder="Enter email here" autocomplete="on" required value="<%= user.email %>">
                 </div>
                 <div class="input-el">
                     <label for="phone">Phone:</label><br/>
-                    <input type="tel" id="phone" name="phone" placeholder="Enter phone here" autocomplete="on" required>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter phone here" autocomplete="on" required value="<%= user.phone %>">
                 </div>
                 <div class="input-el">
                     <label for="admission">Admission Number:</label><br/>
-                    <input type="text" id="admission" name="admission" placeholder="Enter the admission number here" autocomplete="on" required>
+                    <input type="text" id="admission" name="admission" placeholder="Enter the admission number here" autocomplete="on" required value="<%= user.admission %>">
                 </div>
                 <div class="input-el">
                     <label for="payment">Amount Paid:</label><br/>
-                    <input type="text" id="payment" name="payment" placeholder="Enter the amount paid here"  autocomplete="on" required>
+                    <input type="text" id="payment" name="payment" placeholder="Enter the amount paid here"  autocomplete="on" required value="<%= user.payment %>">
                 </div>
                 <div class="input-el">
-                    <input type="submit" name="submit" value="Update User" class="input-el-btn">
+                    <input type="submit" name="submit" value="Update Member" class="input-el-btn">
                 </div>
             </form>
         </div>

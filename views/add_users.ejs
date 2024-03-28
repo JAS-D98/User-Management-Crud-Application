@@ -1,10 +1,14 @@
 <%- include('layout/_header') %>
 
-
+<% if(message){%>
+    <div class="alert <%= message.type %>" role="alert">
+        <%= message.message %>
+    </div>
+  <%}%>
         <div class="container-el">
             <form action="/add" method="POST">
                 <span>
-                    <h1>Register New Users</h1>
+                    <h1>Register New Members</h1>
                 </span>
                 <div class="input-el">
                     <label for="name">Name:</label><br/>
@@ -27,7 +31,7 @@
                     <input type="text" id="payment" name="payment" placeholder="Enter the amount paid here"  autocomplete="on" required>
                 </div>
                 <div class="input-el">
-                    <input type="submit" name="submit" value="Add User" class="input-el-btn">
+                    <input type="submit" name="submit" value="Add Member" class="input-el-btn">
                 </div>
             </form>
         </div>

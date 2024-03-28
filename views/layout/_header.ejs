@@ -9,15 +9,11 @@
 <body>
     <div class="container">
         <nav>
-            <h1>MUTCU Mission Center</h1>
-            <ul>
-                <% if(user){ %>
-                    <li>Welcome <%= user.email%></li>
-                    <li>
-                        <a href="/logout">Log Out</a>
-                    </li>
-               <% } %>
-                
+           <a href="/"><h1>MUTCU Mission Center</h1></a>
+           <% if(user){ %>
+            <h1 class="greeting">Welcome <%= user.username%></h1>
+       <% } %>
+            <ul>    
                 <li>
                     <a href="/">Home</a>
                 </li>
@@ -30,6 +26,10 @@
                 <li>
                     <a href="/registered">Registered Members</a>
                 </li>
-               
+                <% if(user){ %>
+                    <li>
+                        <a href="/logout">Log Out</a>
+                    </li>
+               <% } %>
             </ul>
         </nav>

@@ -1,0 +1,39 @@
+<!-- views/search_results.ejs -->
+
+<%- include('layout/_header') %>
+
+<div class="container-table">
+    <% if (users.length > 0) { %>
+        <!-- Display search results -->
+        <table>
+            <!-- Table header -->
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Phone</th>
+                    <th>Registration No.</th>
+                    <!-- Add more table headers as needed -->
+                </tr>
+            </thead>
+            <!-- Table body -->
+            <tbody>
+                <% users.forEach((user, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= user.name %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.phone %></td>
+                        <td><%= user.admission %></td>
+                        <!-- Add more table cells as needed -->
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <h1>No search results found</h1>
+    <% } %>
+</div>
+
+<%- include('layout/_footer') %>
