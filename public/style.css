@@ -79,3 +79,6 @@ form .del:hover{color: red;}
 .mail-text{margin-bottom: 16%;}
 .error{color: red;}
 
+.highlight-row {
+    background-color: yellow; /* Change this to your desired highlight color */
+}

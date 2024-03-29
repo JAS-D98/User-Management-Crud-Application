@@ -58,11 +58,12 @@ module.exports.signup_post=async (req, res)=>{
 }
 
 module.exports.login_post = async (req, res) => {
-    const { email, password } = req.body; // Extract email and password from req.body
+    const { email, password } = req.body; 
     try {
-        const user = await authUser.login({ email, password }); // Pass an object containing email and password
+        const user = await authUser.login({ email, password });
         const token=createToken(user._id)
         res.cookie('jwt',token, {httpOnly: true, maxDuration: maxDuration*1000})
+        req.session.user = user; 
         res.status(200).json({ user: user._id });
     } catch (err) {
         const errors=handleError(err);

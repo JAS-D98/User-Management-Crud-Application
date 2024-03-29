@@ -5,9 +5,8 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const authController=require('../controllers/authControllers');
 const Notification=require('../models/notifications');
 const cookieParser=require('cookie-parser');
-const { requireAuth, checkUser } = require('../authmiddleware/authMiddleware');
+const { requireAuth, checkUser, isAdmin } = require('../authmiddleware/authMiddleware');
 const { Parser } = require('json2csv');
-const isAdmin=require('../adminmiddleware/adminmiddleware')
 const nodemailer=require('nodemailer');
 const Charge=require('../models/charges');
 
@@ -26,46 +25,6 @@ const transporter=nodemailer.createTransport({
         pass:"",
     }
 })
-// router.post('/send-emails',isAdmin, async (req, res)=>{
-//     const { subject, text } = req.body;
-//     try{
-//         const users= await User.find({}, 'email');
-//         const userEmails=users.map(user=>user.email);
-
-//         const mailOptions={
-//             from: 'Mutchristianunion@gmail.com',
-//             to: userEmails.join(','),
-//             subject: subject,
-//             text: `Hi ${users.name}`+text,
-//         }
-//         await transporter.sendMail(mailOptions)
-//         res.status(200).json({ type:'success' ,message: 'Email sent to all users successfully' });
-//     }catch(err){
-//         console.log(err)
-//     }
-// })
-
-// router.post('/send-emails',isAdmin, async (req, res)=>{
-//     const { subject, text } = req.body;
-//     try{
-//         const users= await User.find({}, 'email');
-//         const userEmails=users.map(user=>user.email);
-
-//         users.forEach(async(user)=>{
-//             const mailOptions={
-//                 from: 'Mutchristianunion@gmail.com',
-//                 to: userEmails.join(','),
-//                 subject: subject,
-//                 text: `Hello ${user.name}<br>`+text,
-//             }
-//             await transporter.sendMail(mailOptions)
-//             res.status(200).json({ type:'success' ,message: 'Email sent to all users successfully' });
-//             res.redirect('/admin')
-//         })
-//     }catch(err){
-//         console.log(err)
-//     }
-// })
 
 // POST route to handle sending emails
 router.post('/send-email', async (req, res) => {
@@ -89,11 +48,9 @@ router.post('/send-email', async (req, res) => {
         // Send email
         await transporter.sendMail(mailOptions);
 
-        // Respond with success message
         res.status(200).json({ type: 'success', message: 'Email sent to all users successfully' });
     } catch (error) {
         console.error('Error sending email:', error);
-        // Respond with error message
         res.status(500).json({ type: 'error', message: 'Internal Server Error' });
     }
 });
@@ -151,7 +108,6 @@ const csvWriter = createCsvWriter({
     { id: 'phone', title: 'Phone' },
     { id: 'admission', title: 'Registration Number' },
     { id: 'payment', title: 'Payment (Kshs)' },
-    // Add more fields as needed
   ]
 });
 
@@ -220,24 +176,14 @@ router.get('/search-results', (req, res) => {
     res.render('search_results', { title: 'Search Results', users: users });
 });
 
-// // // Route to handle search request
-// router.get('/search', async (req, res) => {
-//     try {
-//         const query = req.query.query; // Get search query from request
-//         const users = await User.find({ $or: [{ name: query }, { email: query }, { admission: query }] }); // Search for users with name, email, or admission number matching the query
-//         res.render('search_results', { title: 'Search Results', users: users }); // Render search_results template with search results
-//     } catch (err) {
-//         console.error('Error searching users:', err);
-//         res.status(500).send('Internal Server Error');
-//     }
-// });
+
 // Route to handle search request
 router.get('/search', async (req, res) => {
     try {
-        const query = req.query.query; // Get search query from request
-        const regexQuery = new RegExp(query, 'i'); // Create case-insensitive regex query
+        const query = req.query.query; 
+        const regexQuery = new RegExp(query, 'i'); // case-insensitive regex query
 
-        // Search for users with name, email, or admission number partially matching the query
+
         const users = await User.find({
             $or: [
                 { name: { $regex: regexQuery } }, 
@@ -246,7 +192,7 @@ router.get('/search', async (req, res) => {
             ]
         }); 
 
-        res.render('search_results', { title: 'Search Results', users: users }); // Render search_results template with search results
+        res.render('search_results', { title: 'Search Results', users: users });
     } catch (err) {
         console.error('Error searching users:', err);
         res.status(500).send('Internal Server Error');
@@ -282,20 +228,6 @@ router.get('/registered',requireAuth,isAdmin, async (req, res) => {
       res.status(500).send('Error fetching users');
     }
   });
-
-/* router.get('/registered', async (req, res) => {
-    try {
-        const users = await User.find().exec();
-        res.render('registered_members', {
-            title: 'Registered Members Page',
-            users: users,
-            message: req.session.message // Pass any message stored in session
-            
-        });
-    } catch (err) {
-        res.json({ message: err.message, type: 'danger' });
-    }
-}); */
 
 // Get user route
 router.get("/edit/:id",isAdmin, async (req, res) => {
@@ -346,30 +278,6 @@ router.post('/add',requireAuth,isAdmin, async (req, res) => {
         res.redirect('/add')
     }
 });
-
-// router.post('/add', async (req, res) => {
-//     try {
-//         const user = new User({
-//             name: req.body.name,
-//             email: req.body.email,
-//             phone: req.body.phone,
-//             admission: req.body.admission,
-//             payment: req.body.payment,
-//         });
-//         await user.save();
-//         req.session.message = {
-//             type: 'success',
-//             message: 'User added successfully!',
-//         };
-//         res.redirect("/registered");
-//     } catch (err) {
-//         req.session.message = {
-//             type: 'danger',
-//             message: err.message,
-//         };
-//         res.redirect("/add");
-//     }
-// });
 
 //update a users info
 router.post('/update/:id',isAdmin, async(req, res)=>{

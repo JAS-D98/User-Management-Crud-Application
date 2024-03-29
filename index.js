@@ -38,7 +38,7 @@ app.use((req, res, next) => {
     if (req.session.message) {
         setTimeout(() => {
             delete req.session.message;
-        }, 3000); // Timeout duration in milliseconds (e.g., 3000ms = 3 seconds)
+        }, 3000); 
     }
     next();
 });

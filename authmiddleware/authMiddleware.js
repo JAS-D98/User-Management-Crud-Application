@@ -23,6 +23,17 @@ const requireAuth=(req, res, next)=>{
     }
 }
 
+//admin authentication
+const isAdmin = (req, res, next) => {
+    if (req.session && req.session.user && req.session.user.role === 'admin') {
+        return next();
+    } else {
+        // res.send(403).send('Unauthorized')
+        res.redirect('/');
+    }
+};
+
+
 //check current user
 const checkUser = (req, res, next )=>{
     const token = req.cookies.jwt;
@@ -46,4 +57,4 @@ const checkUser = (req, res, next )=>{
     }
 }
 
-module.exports={ requireAuth , checkUser}
+module.exports={ requireAuth , checkUser, isAdmin}
