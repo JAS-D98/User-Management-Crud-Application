@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
     phone: {type: String, required: true},
     admission: {type: String, required: true,unique:true},
     payment: {type: String, required: true},
+    duty: {type: String,required:true},
+    
 });
 module.exports = mongoose.model('User', userSchema);
-  

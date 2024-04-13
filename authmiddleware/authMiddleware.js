@@ -24,14 +24,24 @@ const requireAuth=(req, res, next)=>{
 }
 
 //admin authentication
+// const isAdmin = (req, res, next) => {
+//     if (req.session && req.session.user && req.session.user.role === 'admin') {
+//         return next();
+//     } else {
+//         // res.send(403).send('Unauthorized')
+//         res.redirect('/');
+//     }
+// };
 const isAdmin = (req, res, next) => {
     if (req.session && req.session.user && req.session.user.role === 'admin') {
+        const token = jwt.sign({ id: req.session.user.id }, SECRET_KEY, { expiresIn: '1h' }); // expiration time set to 1 hour for admin
+        res.cookie('jwt', token, { httpOnly: true, maxAge: 3600000 }); // 1hr in milliseconds
         return next();
     } else {
-        // res.send(403).send('Unauthorized')
         res.redirect('/');
     }
 };
+
 
 
 //check current user

@@ -29,6 +29,7 @@
               <th>Phone</th>
               <th>Registration No.</th>
               <th>Payment <%= charges %></th>
+              <th>Role</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -41,6 +42,7 @@
               <td><%= row.phone %></td>
               <td><%= row.admission %></td>
               <td><%= row.payment %></td>
+              <td><%= row.duty %></td>
               <td>
                 <a href="/edit/<%= row._id %>" class="btn">Edit</a>
                 <a href="/delete/<%= row._id %>" class="btn">Delete</a>

@@ -256,6 +256,7 @@ router.post('/add',requireAuth,isAdmin, async (req, res) => {
             phone: req.body.phone,
             admission: req.body.admission,
             payment: req.body.payment,         
+            duty: req.body.duty,         
         });
         // const { name, email, phone, admission, payment } = req.body;
         // // Read csv file
